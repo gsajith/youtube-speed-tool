@@ -62,6 +62,9 @@ for (const button of keyButtons) {
 
 document.addEventListener("keydown", (e) => {
   if (!capturing || MODIFIER_KEYS.has(e.key)) return;
+  // Tab moves focus as usual, which cancels the capture. Ctrl, Alt and Cmd combos are skipped
+  // because the content script ignores keys pressed with them.
+  if (e.key === "Tab" || e.ctrlKey || e.metaKey || e.altKey) return;
   e.preventDefault();
   const button = capturing;
   stopCapturing();

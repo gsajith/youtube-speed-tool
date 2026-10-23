@@ -85,6 +85,38 @@ test("shift+scroll over the video changes the speed", async () => {
   await expectRate(1.25);
 });
 
+test("stepping from a rate the site set lands back on 1x plus whole steps", async () => {
+  await page.$eval("video", (v) => (v.playbackRate = 1.4));
+  await page.keyboard.press("+");
+  await expectRate(1.5);
+  await page.$eval("video", (v) => (v.playbackRate = 1.12));
+  await page.keyboard.press("-");
+  await expectRate(1);
+});
+
+test("a small video that starts playing doesn't take over the shortcuts", async () => {
+  await page.evaluate(async () => {
+    const preview = Object.assign(document.createElement("video"), { src: "/clip.webm", muted: true });
+    preview.style.cssText = "width: 120px; height: 68px";
+    document.body.append(preview);
+    await preview.play();
+  });
+  await page.keyboard.press("+");
+  await expectRate(1.25);
+});
+
+test("an always-on control comes back after its video was hidden", async () => {
+  const worker = context.serviceWorkers()[0];
+  await worker.evaluate(() => chrome.storage.sync.set({ display: "always" }));
+  const pill = page.locator(".pill");
+  await pill.waitFor({ state: "visible" });
+  await page.$eval("video", (v) => (v.style.display = "none"));
+  await pill.waitFor({ state: "hidden" });
+  await page.$eval("video", (v) => (v.style.display = "block"));
+  await pill.waitFor({ state: "visible", timeout: 2000 });
+  await worker.evaluate(() => chrome.storage.sync.clear());
+});
+
 test("time saved is recorded while watching faster", async () => {
   await page.$eval("video", (v) => (v.playbackRate = 4));
   // Build up some saved time first: Chrome may pause video-only media once this tab is in the

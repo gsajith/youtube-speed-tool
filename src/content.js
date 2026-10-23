@@ -61,12 +61,16 @@ const OVERLAY_CSS = `
   const MIN_VIDEO_WIDTH = 160; // Skip thumbnails and tiny previews.
   const MIN_VIDEO_HEIGHT = 90;
   const WHEEL_THRESHOLD = 50; // Pixels of scroll per speed step, so trackpads don't race.
+  const WHEEL_IDLE_MS = 300; // A pause this long starts a new scroll gesture.
+  const POLL_MS = 500; // Catches player moves that fire no event, like a banner pushing it down.
 
   const settings = await loadSettings();
   let video = null;
   let hovering = false;
+  let pointer = { x: -1, y: -1 }; // Last mouse position, to recompute hovering on a video switch.
   let flashUntil = 0;
   let wheelDelta = 0;
+  let lastWheel = 0;
   let unsavedSeconds = 0;
   const lastTimes = new WeakMap(); // video -> currentTime at its previous timeupdate
 
@@ -120,11 +124,32 @@ const OVERLAY_CSS = `
     return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
   }
 
+  function isPointerOver(v) {
+    return Boolean(v?.isConnected && contains(v.getBoundingClientRect(), pointer.x, pointer.y));
+  }
+
+  const resizeObserver = new ResizeObserver(() => schedule());
+
   function setVideo(next) {
-    if (next === video) return;
+    if (next === video) {
+      schedule();
+      return;
+    }
+    if (video) resizeObserver.unobserve(video);
     video = next;
+    resizeObserver.observe(video);
+    hovering = isPointerOver(video);
+    wheelDelta = 0;
     rate.textContent = formatRate(video.playbackRate);
+    // Only pages with a video pay for a non-passive wheel listener. Adding the same listener
+    // again is a no-op.
+    addEventListener("wheel", onWheel, { capture: true, passive: false });
     mount();
+  }
+
+  // A small preview or ad that starts playing shouldn't take the shortcuts from the main video.
+  function adopt(v) {
+    if (!video?.isConnected || isBig(v.getBoundingClientRect())) setVideo(v);
   }
 
   // The current video, or the largest one on the page if we don't have one yet.
@@ -152,10 +177,14 @@ const OVERLAY_CSS = `
     v.playbackRate = Math.min(MAX_RATE, Math.max(MIN_RATE, Math.round(next * 10000) / 10000));
   }
 
-  // Snap to a multiple of the step, so a rate clamped at the minimum climbs back to round numbers.
+  // Move to the next rate of the form 1x + n steps, so stepping always passes through 1x, even
+  // from a rate the site set (1.4x + 0.25 gives 1.5x) or one clamped at the minimum.
   function stepRate(v, direction) {
     const { step } = settings;
-    setRate(v, Math.round((v.playbackRate + direction * step) / step) * step);
+    const steps = (v.playbackRate - 1) / step;
+    const EPSILON = 1e-6; // Absorbs float error, so 1.25x counts as exactly one step.
+    const next = direction > 0 ? Math.floor(steps + EPSILON) + 1 : Math.ceil(steps - EPSILON) - 1;
+    setRate(v, 1 + next * step);
   }
 
   function formatRate(r) {
@@ -197,8 +226,8 @@ const OVERLAY_CSS = `
     frame.classList.toggle("show", show);
   }
 
-  // Follow the video every frame while the control is visible: players move and resize
-  // (theater mode, scrolling, mini players) without telling anyone.
+  // Coalesces render requests into one per frame. Renders follow the video's resizes, page
+  // scrolls, window resizes and a slow poll, since players can also move without any event.
   let frameRequested = false;
   function schedule() {
     if (frameRequested) return;
@@ -206,7 +235,6 @@ const OVERLAY_CSS = `
     requestAnimationFrame(() => {
       frameRequested = false;
       render();
-      if (frame.classList.contains("show")) schedule();
     });
   }
 
@@ -215,20 +243,37 @@ const OVERLAY_CSS = `
     return Boolean(el?.isContentEditable || /^(input|textarea|select)$/.test(el?.localName));
   }
 
+  // The background script owns the total, so tabs and frames reporting at once don't
+  // overwrite each other.
   async function saveTimeSaved() {
     if (unsavedSeconds <= 0) return;
     const seconds = unsavedSeconds;
     unsavedSeconds = 0;
     try {
-      const { timeSaved } = await chrome.storage.local.get({ timeSaved: 0 });
-      await chrome.storage.local.set({ timeSaved: timeSaved + seconds });
+      await chrome.runtime.sendMessage({ type: "time-saved", seconds });
     } catch {
-      // The extension was reloaded or removed, so this copy of the script can't save anymore.
+      // The extension was reloaded or removed, so this copy of the script can't report anymore.
     }
   }
 
+  function onWheel(e) {
+    if (!settings.shiftScroll || !e.shiftKey || e.ctrlKey || e.metaKey) return;
+    const v = videoAt(e.clientX, e.clientY);
+    if (!v) return;
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if (Date.now() - lastWheel > WHEEL_IDLE_MS) wheelDelta = 0;
+    lastWheel = Date.now();
+    // macOS turns Shift+vertical scroll into horizontal scroll, so read whichever axis moved.
+    // Firefox reports mouse wheels in lines (deltaMode 1) instead of pixels.
+    wheelDelta += (e.deltaY || e.deltaX) * (e.deltaMode === 1 ? 33 : 1);
+    if (Math.abs(wheelDelta) < WHEEL_THRESHOLD) return;
+    stepRate(v, wheelDelta < 0 ? 1 : -1);
+    wheelDelta = 0;
+  }
+
   // Media events don't bubble, but they do pass through the capture phase on document.
-  document.addEventListener("play", (e) => isVideo(e.target) && setVideo(e.target), true);
+  document.addEventListener("play", (e) => isVideo(e.target) && adopt(e.target), true);
 
   document.addEventListener(
     "ratechange",
@@ -237,6 +282,7 @@ const OVERLAY_CSS = `
       rate.textContent = formatRate(video.playbackRate);
       flashUntil = Date.now() + FLASH_MS;
       schedule();
+      setTimeout(schedule, FLASH_MS); // Hide again once the flash is over.
     },
     true,
   );
@@ -263,11 +309,15 @@ const OVERLAY_CSS = `
   );
 
   document.addEventListener("fullscreenchange", mount);
+  document.addEventListener("scroll", () => video && schedule(), { capture: true, passive: true });
+  addEventListener("resize", () => video && schedule());
+  setInterval(() => video && !document.hidden && schedule(), POLL_MS);
 
   document.addEventListener(
     "mousemove",
     (e) => {
-      const inside = Boolean(video?.isConnected && contains(video.getBoundingClientRect(), e.clientX, e.clientY));
+      pointer = { x: e.clientX, y: e.clientY };
+      const inside = isPointerOver(video);
       if (inside === hovering) return;
       hovering = inside;
       schedule();
@@ -276,7 +326,9 @@ const OVERLAY_CSS = `
   );
 
   document.addEventListener("mouseout", (e) => {
-    if (e.relatedTarget || !hovering) return; // The pointer left the window.
+    if (e.relatedTarget) return;
+    pointer = { x: -1, y: -1 }; // The pointer left the window.
+    if (!hovering) return;
     hovering = false;
     schedule();
   });
@@ -301,24 +353,6 @@ const OVERLAY_CSS = `
       else stepRate(v, action === "faster" ? 1 : -1);
     },
     true,
-  );
-
-  addEventListener(
-    "wheel",
-    (e) => {
-      if (!settings.shiftScroll || !e.shiftKey || e.ctrlKey || e.metaKey) return;
-      const v = videoAt(e.clientX, e.clientY);
-      if (!v) return;
-      e.preventDefault();
-      e.stopImmediatePropagation();
-      // macOS turns Shift+vertical scroll into horizontal scroll, so read whichever axis moved.
-      // Firefox reports mouse wheels in lines (deltaMode 1) instead of pixels.
-      wheelDelta += (e.deltaY || e.deltaX) * (e.deltaMode === 1 ? 33 : 1);
-      if (Math.abs(wheelDelta) < WHEEL_THRESHOLD) return;
-      stepRate(v, wheelDelta < 0 ? 1 : -1);
-      wheelDelta = 0;
-    },
-    { capture: true, passive: false },
   );
 
   chrome.storage.onChanged.addListener((changes, area) => {
