@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Video Speed Tool settings</title>
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <img src="icons/icon-128.png" alt="" width="44" height="44" />
+        <div class="title">
+          <h1>Video Speed Tool</h1>
+          <p>Changes save automatically. <span id="status" role="status"></span></p>
+        </div>
+        <div class="stat">
+          <strong id="time-saved">0s</strong>
+          <span>saved by watching faster</span>
+        </div>
+      </header>
+
+      <section aria-labelledby="shortcuts-heading">
+        <h2 id="shortcuts-heading">Shortcuts</h2>
+        <div class="row">
+          <span>Speed up</span>
+          <button type="button" class="key" data-setting="increaseKey"></button>
+        </div>
+        <div class="row">
+          <span>Slow down</span>
+          <button type="button" class="key" data-setting="decreaseKey"></button>
+        </div>
+        <div class="row">
+          <span>Reset to 1x</span>
+          <button type="button" class="key" data-setting="resetKey"></button>
+        </div>
+        <label class="row">
+          <span>Speed step</span>
+          <input id="step" type="number" min="0.05" max="4" step="0.05" inputmode="decimal" />
+        </label>
+        <label class="row">
+          <span>Shift + scroll over a video changes speed</span>
+          <input type="checkbox" class="switch" data-setting="shiftScroll" />
+        </label>
+        <p class="hint">
+          Click a shortcut, then press the key you want. Shortcuts act on the video in the part of the
+          page you last clicked, so click an embedded player once before using them on it.
+        </p>
+      </section>
+
+      <section aria-labelledby="display-heading">
+        <h2 id="display-heading">On-video control</h2>
+        <fieldset class="modes">
+          <legend>Show the control</legend>
+          <label class="mode">
+            <input type="radio" name="display" value="hover" />
+            <span class="preview"><span class="pill"><i>&laquo;</i><b>1.5x</b><i>&raquo;</i><i>&#x2699;&#xFE0E;</i></span><span class="cursor"></span></span>
+            <span class="name">On hover</span>
+            <span class="desc">When the pointer is over the video, and briefly when the speed changes</span>
+          </label>
+          <label class="mode">
+            <input type="radio" name="display" value="always" />
+            <span class="preview"><span class="pill"><i>&laquo;</i><b>1.5x</b><i>&raquo;</i><i>&#x2699;&#xFE0E;</i></span></span>
+            <span class="name">Always</span>
+            <span class="desc">Speed and buttons stay on screen</span>
+          </label>
+          <label class="mode">
+            <input type="radio" name="display" value="simple" />
+            <span class="preview"><span class="pill"><b>1.5x</b></span></span>
+            <span class="name">Speed only</span>
+            <span class="desc">Always shows the speed, no buttons</span>
+          </label>
+          <label class="mode">
+            <input type="radio" name="display" value="never" />
+            <span class="preview"></span>
+            <span class="name">Hidden</span>
+            <span class="desc">Shortcuts and scrolling still work</span>
+          </label>
+        </fieldset>
+
+        <fieldset class="positions">
+          <legend>Position</legend>
+          <div class="screen">
+            <label title="Top left"><input type="radio" name="position" value="top-left" aria-label="Top left" /></label>
+            <label title="Top middle"><input type="radio" name="position" value="top-middle" aria-label="Top middle" /></label>
+            <label title="Top right"><input type="radio" name="position" value="top-right" aria-label="Top right" /></label>
+            <label title="Bottom left"><input type="radio" name="position" value="bottom-left" aria-label="Bottom left" /></label>
+            <label title="Bottom middle"><input type="radio" name="position" value="bottom-middle" aria-label="Bottom middle" /></label>
+            <label title="Bottom right"><input type="radio" name="position" value="bottom-right" aria-label="Bottom right" /></label>
+          </div>
+        </fieldset>
+
+        <label class="row">
+          <span>Show the settings button</span>
+          <input type="checkbox" class="switch" data-setting="showSettingsButton" />
+        </label>
+        <label class="row">
+          <span>Fade in and out</span>
+          <input type="checkbox" class="switch" data-setting="fade" />
+        </label>
+      </section>
+
+      <footer>
+        <button type="button" id="reset">Reset to defaults</button>
+        <p class="hint">Audio may cut out above 4x. That limit comes from the browser.</p>
+      </footer>
+    </main>
+    <script src="settings.js"></script>
+    <script src="options.js"></script>
+  </body>
+</html>
