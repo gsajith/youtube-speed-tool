@@ -1,0 +1,44 @@
+{
+  "manifest_version": 3,
+  "name": "Video Speed Tool",
+  "version": "0.1.0",
+  "description": "Change video playback speed with keyboard shortcuts, Shift+scroll or an on-video speed control. Works on YouTube and any HTML5 video.",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_title": "Video Speed Tool settings",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["settings.js", "content.js"],
+      "all_frames": true
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "video-speed-tool@gsajith",
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"]
+      }
+    }
+  }
+}
