@@ -60,6 +60,8 @@ const OVERLAY_CSS = `
   const FLASH_MS = 300; // How long a hidden control shows after the speed changes.
   const MIN_VIDEO_WIDTH = 160; // Skip thumbnails and tiny previews.
   const MIN_VIDEO_HEIGHT = 90;
+  const EDGE_GAP = 10; // Space between the control and the video's edge, matching the CSS padding.
+  const PLAYER_CONTROLS_HEIGHT = 48; // Typical control bar height, for players we can't measure.
   const POLL_MS = 500; // Catches player moves that fire no event, like a banner pushing it down.
 
   const settings = await loadSettings();
@@ -191,6 +193,13 @@ const OVERLAY_CSS = `
     schedule();
   }
 
+  // How far up a bottom-positioned control moves to clear the player's own controls.
+  // YouTube's bar is measured, since it is taller in fullscreen.
+  function controlsHeight(rect) {
+    const bar = video.closest(".html5-video-player")?.querySelector(".ytp-chrome-bottom");
+    return bar ? Math.max(0, rect.bottom - bar.getBoundingClientRect().top) : PLAYER_CONTROLS_HEIGHT;
+  }
+
   function render() {
     const rect = video?.isConnected ? video.getBoundingClientRect() : null;
     if (!rect || !isBig(rect)) {
@@ -205,6 +214,9 @@ const OVERLAY_CSS = `
     frame.style.top = `${rect.top}px`;
     frame.style.width = `${rect.width}px`;
     frame.style.height = `${rect.height}px`;
+    frame.style.paddingBottom = settings.position.startsWith("bottom")
+      ? `${EDGE_GAP + controlsHeight(rect)}px`
+      : "";
     frame.classList.toggle("show", show);
   }
 

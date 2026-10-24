@@ -16,6 +16,15 @@ const PAGE = `<!doctype html>
   <input id="text" />
 </body>`;
 
+// The parts of YouTube's player markup the extension looks for.
+const YOUTUBE_PAGE = `<!doctype html>
+<body style="margin: 0">
+  <div class="html5-video-player" style="position: relative; width: 640px; height: 360px; margin: 40px">
+    <video src="/clip.webm" muted loop autoplay playsinline style="width: 100%; height: 100%"></video>
+    <div class="ytp-chrome-bottom" style="position: absolute; left: 0; right: 0; bottom: 0; height: 70px"></div>
+  </div>
+</body>`;
+
 let context;
 let extensionId;
 let page;
@@ -30,9 +39,12 @@ before(async () => {
   });
   // Content scripts only match http(s), so serve the test page from a fake https origin.
   await context.route("https://test.local/**", (route) =>
-    new URL(route.request().url()).pathname === "/clip.webm"
-      ? route.fulfill({ body: clip, contentType: "video/webm" })
-      : route.fulfill({ body: PAGE, contentType: "text/html" }),
+    route.fulfill(
+      {
+        "/clip.webm": { body: clip, contentType: "video/webm" },
+        "/youtube": { body: YOUTUBE_PAGE, contentType: "text/html" },
+      }[new URL(route.request().url()).pathname] ?? { body: PAGE, contentType: "text/html" },
+    ),
   );
   const worker = context.serviceWorkers()[0] ?? (await context.waitForEvent("serviceworker"));
   extensionId = new URL(worker.url()).host;
@@ -106,6 +118,27 @@ test("an always-on control comes back after its video was hidden", async () => {
   await pill.waitFor({ state: "hidden" });
   await page.$eval("video", (v) => (v.style.display = "block"));
   await pill.waitFor({ state: "visible", timeout: 2000 });
+  await worker.evaluate(() => chrome.storage.sync.clear());
+});
+
+test("a bottom-positioned control sits above the player's own controls", async () => {
+  const worker = context.serviceWorkers()[0];
+  await worker.evaluate(() => chrome.storage.sync.set({ display: "always", position: "bottom-right" }));
+  const pillBottom = async () => {
+    await page.locator(".pill").waitFor({ state: "visible" });
+    await page.waitForTimeout(100); // Let the render with the new settings land.
+    return (await page.locator(".pill").boundingBox()).y + (await page.locator(".pill").boundingBox()).height;
+  };
+
+  // A plain video: lifted by the typical control bar height.
+  const videoBox = await page.locator("video").boundingBox();
+  assert.ok((await pillBottom()) <= videoBox.y + videoBox.height - 48);
+
+  // YouTube: lifted above its measured control bar.
+  await page.goto("https://test.local/youtube");
+  const bar = await page.locator(".ytp-chrome-bottom").boundingBox();
+  assert.ok((await pillBottom()) <= bar.y);
+
   await worker.evaluate(() => chrome.storage.sync.clear());
 });
 
