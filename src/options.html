@@ -54,21 +54,15 @@
           <legend>Show the control</legend>
           <label class="mode">
             <input type="radio" name="display" value="hover" />
-            <span class="preview"><span class="pill"><i>&laquo;</i><b>1.5x</b><i>&raquo;</i><i class="gear">&#x2699;&#xFE0E;</i></span><span class="cursor"></span></span>
+            <span class="preview"><span class="pill"><i class="step">&laquo;</i><b>1.5x</b><i class="step">&raquo;</i><i class="gear">&#x2699;&#xFE0E;</i></span><span class="cursor"></span></span>
             <span class="name">On hover</span>
             <span class="desc">When the pointer is over the video, and briefly when the speed changes</span>
           </label>
           <label class="mode">
             <input type="radio" name="display" value="always" />
-            <span class="preview"><span class="pill"><i>&laquo;</i><b>1.5x</b><i>&raquo;</i><i class="gear">&#x2699;&#xFE0E;</i></span></span>
+            <span class="preview"><span class="pill"><i class="step">&laquo;</i><b>1.5x</b><i class="step">&raquo;</i><i class="gear">&#x2699;&#xFE0E;</i></span></span>
             <span class="name">Always</span>
-            <span class="desc">Speed and buttons stay on screen</span>
-          </label>
-          <label class="mode">
-            <input type="radio" name="display" value="simple" />
-            <span class="preview"><span class="pill"><b>1.5x</b></span></span>
-            <span class="name">Speed only</span>
-            <span class="desc">Always shows the speed, no buttons</span>
+            <span class="desc">Stays on screen</span>
           </label>
           <label class="mode">
             <input type="radio" name="display" value="never" />
@@ -78,6 +72,14 @@
           </label>
         </fieldset>
 
+        <label class="row">
+          <span>Show the speed buttons</span>
+          <input type="checkbox" class="switch" data-setting="showSpeedButtons" />
+        </label>
+        <label class="row">
+          <span>Show the settings button</span>
+          <input type="checkbox" class="switch" data-setting="showSettingsButton" />
+        </label>
         <fieldset class="positions">
           <legend>Position</legend>
           <div class="screen">
@@ -90,10 +92,6 @@
           </div>
         </fieldset>
 
-        <label class="row">
-          <span>Show the settings button</span>
-          <input type="checkbox" class="switch" data-setting="showSettingsButton" />
-        </label>
         <label class="row">
           <span>Fade in and out</span>
           <input type="checkbox" class="switch" data-setting="fade" />

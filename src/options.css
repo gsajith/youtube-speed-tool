@@ -224,7 +224,7 @@ legend {
 
 .modes {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 10px;
 }
 
@@ -293,6 +293,7 @@ legend {
   opacity: 0.7;
 }
 
+.no-speed-buttons .pill .step,
 .no-gear .pill .gear {
   display: none;
 }
@@ -396,10 +397,6 @@ footer .hint {
 }
 
 @media (max-width: 560px) {
-  .modes {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   header {
     flex-wrap: wrap;
   }

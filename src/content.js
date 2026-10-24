@@ -49,7 +49,7 @@ const OVERLAY_CSS = `
     font-variant-numeric: tabular-nums;
   }
   .gear { font-size: 18px; }
-  .simple .dec, .simple .inc, .simple .gear, .no-gear .gear { display: none; }
+  .no-speed-buttons .dec, .no-speed-buttons .inc, .no-gear .gear { display: none; }
 `;
 
 // Runs in every frame of every http(s) page. Attaches one speed control to the "active" video:
@@ -202,6 +202,7 @@ const OVERLAY_CSS = `
   function applySettings() {
     frame.className = ["frame", ...settings.position.split("-"), settings.display].join(" ");
     frame.classList.toggle("fade", settings.fade);
+    frame.classList.toggle("no-speed-buttons", !settings.showSpeedButtons);
     frame.classList.toggle("no-gear", !settings.showSettingsButton);
     schedule();
   }
@@ -214,10 +215,7 @@ const OVERLAY_CSS = `
       return;
     }
     const { display } = settings;
-    const show =
-      display === "always" ||
-      display === "simple" ||
-      (display === "hover" && (hovering || Date.now() < flashUntil));
+    const show = display === "always" || (display === "hover" && (hovering || Date.now() < flashUntil));
     frame.style.display = "";
     frame.style.left = `${rect.left}px`;
     frame.style.top = `${rect.top}px`;
