@@ -3,7 +3,7 @@ const KEY_LABELS = { " ": "Space", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: 
 const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta", "CapsLock", "Fn", "OS", "Dead"]);
 
 const stepInput = document.getElementById("step");
-const status = document.getElementById("status");
+const statusLine = document.getElementById("status");
 const keyButtons = document.querySelectorAll(".key");
 let settings = { ...DEFAULT_SETTINGS };
 let capturing = null; // the shortcut button waiting for a key press
@@ -42,9 +42,9 @@ async function save(patch) {
   Object.assign(settings, patch);
   render();
   await chrome.storage.sync.set(patch);
-  status.textContent = "Saved.";
+  statusLine.textContent = "Saved.";
   clearTimeout(statusTimer);
-  statusTimer = setTimeout(() => (status.textContent = ""), 1500);
+  statusTimer = setTimeout(() => (statusLine.textContent = ""), 1500);
 }
 
 function stopCapturing() {
@@ -99,7 +99,7 @@ document.getElementById("reset").addEventListener("click", async () => {
   await chrome.storage.sync.clear();
   settings = { ...DEFAULT_SETTINGS };
   render();
-  status.textContent = "Defaults restored.";
+  statusLine.textContent = "Defaults restored.";
 });
 
 chrome.storage.onChanged.addListener((changes, area) => {
