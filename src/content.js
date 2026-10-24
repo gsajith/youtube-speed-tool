@@ -317,18 +317,13 @@ const OVERLAY_CSS = `
     "keydown",
     (e) => {
       if (e.ctrlKey || e.metaKey || e.altKey || isTyping(e)) return;
-      const action = {
-        [settings.increaseKey]: "faster",
-        [settings.decreaseKey]: "slower",
-        [settings.resetKey]: "reset",
-      }[e.key];
-      if (!action) return;
+      const direction = { [settings.increaseKey]: 1, [settings.decreaseKey]: -1 }[e.key];
+      if (!direction) return;
       const v = activeVideo();
       if (!v) return;
       e.preventDefault();
       e.stopImmediatePropagation();
-      if (action === "reset") setRate(v, 1);
-      else stepRate(v, action === "faster" ? 1 : -1);
+      stepRate(v, direction);
     },
     true,
   );

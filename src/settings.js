@@ -3,7 +3,6 @@
 globalThis.DEFAULT_SETTINGS = Object.freeze({
   increaseKey: "=", // The unshifted + key on most layouts.
   decreaseKey: "-",
-  resetKey: "*",
   step: 0.25,
   display: "hover", // "hover" | "always" | "never"
   position: "top-right", // "top" or "bottom", then "left", "middle" or "right"

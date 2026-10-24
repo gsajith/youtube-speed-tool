@@ -1,4 +1,4 @@
-const KEY_SETTINGS = ["increaseKey", "decreaseKey", "resetKey"];
+const KEY_SETTINGS = ["increaseKey", "decreaseKey"];
 const KEY_LABELS = { " ": "Space", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: "←", ArrowRight: "→" };
 const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta", "CapsLock", "Fn", "OS", "Dead"]);
 
