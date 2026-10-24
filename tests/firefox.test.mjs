@@ -10,6 +10,9 @@ import { after, before, test } from "node:test";
 import puppeteer from "puppeteer-core";
 
 const firefoxPath = process.env.FIREFOX_PATH ?? "/Applications/Firefox.app/Contents/MacOS/firefox";
+// Skip when Firefox isn't installed, unless FIREFOX_PATH names it, as CI does. Then a missing
+// binary fails the run instead of passing quietly.
+const skip = !process.env.FIREFOX_PATH && !existsSync(firefoxPath);
 const root = path.resolve(import.meta.dirname, "..");
 const clip = await readFile(path.join(root, "tests/fixtures/clip.webm"));
 
@@ -25,7 +28,7 @@ let page;
 const playbackRate = () => page.$eval("video", (v) => v.playbackRate);
 
 before(async () => {
-  if (!existsSync(firefoxPath)) return;
+  if (skip) return;
   server = http.createServer((req, res) => {
     const isClip = req.url === "/clip.webm";
     res.writeHead(200, { "content-type": isClip ? "video/webm" : "text/html" });
@@ -44,7 +47,7 @@ after(async () => {
   server?.close();
 });
 
-test("shortcuts and the control work in Firefox", { skip: !existsSync(firefoxPath) }, async () => {
+test("shortcuts and the control work in Firefox", { skip }, async () => {
   await page.keyboard.press("=");
   await page.keyboard.press("=");
   assert.equal(await playbackRate(), 1.5);
@@ -57,7 +60,7 @@ test("shortcuts and the control work in Firefox", { skip: !existsSync(firefoxPat
   assert.equal(await playbackRate(), 1.25);
 });
 
-test("the settings button opens the options page in Firefox", { skip: !existsSync(firefoxPath) }, async () => {
+test("the settings button opens the options page in Firefox", { skip }, async () => {
   const opened = new Promise((resolve) => browser.once("targetcreated", resolve));
   await page.click("pierce/.gear");
   await opened;
