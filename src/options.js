@@ -30,6 +30,8 @@ function render() {
     box.checked = settings[box.dataset.setting];
   }
   stepInput.value = settings.step;
+  // The mode previews mirror the real control, gear included.
+  document.body.classList.toggle("no-gear", !settings.showSettingsButton);
   for (const name of ["display", "position"]) {
     document.querySelector(`input[name=${name}][value="${settings[name]}"]`).checked = true;
   }
