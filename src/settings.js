@@ -10,7 +10,6 @@ globalThis.DEFAULT_SETTINGS = Object.freeze({
   showSpeedButtons: true, // The « and » buttons. With both buttons off, only the speed shows.
   showSettingsButton: true,
   fade: true,
-  shiftScroll: true,
 });
 
 // Passing the defaults to get() fills in any key the user hasn't changed.

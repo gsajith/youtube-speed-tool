@@ -44,7 +44,7 @@ after(async () => {
   server?.close();
 });
 
-test("shortcuts, the control and Shift+scroll work in Firefox", { skip: !existsSync(firefoxPath) }, async () => {
+test("shortcuts and the control work in Firefox", { skip: !existsSync(firefoxPath) }, async () => {
   await page.keyboard.press("=");
   await page.keyboard.press("=");
   assert.equal(await playbackRate(), 1.5);
@@ -55,11 +55,6 @@ test("shortcuts, the control and Shift+scroll work in Firefox", { skip: !existsS
   await page.waitForSelector("pierce/.pill", { visible: true });
   await page.click("pierce/.inc");
   assert.equal(await playbackRate(), 1.25);
-
-  await page.keyboard.down("Shift");
-  await page.mouse.wheel({ deltaY: -100 });
-  await page.keyboard.up("Shift");
-  assert.equal(await playbackRate(), 1.5);
 });
 
 test("the settings button opens the options page in Firefox", { skip: !existsSync(firefoxPath) }, async () => {

@@ -77,14 +77,6 @@ test("the control appears on hover and its buttons work", async () => {
   await expectRate(1);
 });
 
-test("shift+scroll over the video changes the speed", async () => {
-  await page.hover("video");
-  await page.keyboard.down("Shift");
-  await page.mouse.wheel(0, -100);
-  await page.keyboard.up("Shift");
-  await expectRate(1.25);
-});
-
 test("stepping from a rate the site set lands back on 1x plus whole steps", async () => {
   await page.$eval("video", (v) => (v.playbackRate = 1.4));
   await page.keyboard.press("=");

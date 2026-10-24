@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Video Speed Tool",
   "version": "0.1.0",
-  "description": "Change video playback speed with keyboard shortcuts, Shift+scroll or an on-video speed control. Works on YouTube and any HTML5 video.",
+  "description": "Change video playback speed with keyboard shortcuts or an on-video speed control. Works on YouTube and any HTML5 video.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
