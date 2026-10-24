@@ -51,11 +51,13 @@ test("shortcuts and the control work in Firefox", { skip }, async () => {
   await page.keyboard.press("=");
   await page.keyboard.press("=");
   assert.equal(await playbackRate(), 1.5);
-  await page.keyboard.press("*");
-  assert.equal(await playbackRate(), 1);
+  await page.keyboard.press("-");
+  assert.equal(await playbackRate(), 1.25);
 
   await page.hover("video");
   await page.waitForSelector("pierce/.pill", { visible: true });
+  await page.click("pierce/.rate"); // Clicking the speed resets to 1x.
+  assert.equal(await playbackRate(), 1);
   await page.click("pierce/.inc");
   assert.equal(await playbackRate(), 1.25);
 });

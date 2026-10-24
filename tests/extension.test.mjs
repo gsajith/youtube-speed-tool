@@ -59,14 +59,12 @@ beforeEach(async () => {
   await page.locator(".rate").waitFor({ state: "attached" });
 });
 
-test("keyboard shortcuts change and reset the speed", async () => {
+test("keyboard shortcuts change the speed", async () => {
   await page.keyboard.press("=");
   await page.keyboard.press("=");
   await expectRate(1.5);
   await page.keyboard.press("-");
   await expectRate(1.25);
-  await page.keyboard.press("*");
-  await expectRate(1);
 });
 
 test("typing in a text field leaves the speed alone", async () => {
