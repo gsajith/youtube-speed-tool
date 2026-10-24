@@ -1,0 +1,28 @@
+name: Test
+
+# Lints the extension and runs the browser tests: Chromium through Playwright, and the runner's
+# preinstalled Firefox through puppeteer-core.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npx playwright install --with-deps chromium
+      - run: firefox --version
+      - run: npm test
+        env:
+          FIREFOX_PATH: /usr/bin/firefox
