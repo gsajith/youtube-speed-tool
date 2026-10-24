@@ -1,7 +1,7 @@
 // Shared by content.js and options.js. Loaded as a classic script, so it publishes through
 // globalThis: top-level const isn't reliably shared between content scripts in Firefox.
 globalThis.DEFAULT_SETTINGS = Object.freeze({
-  increaseKey: "+",
+  increaseKey: "=", // The unshifted + key on most layouts.
   decreaseKey: "-",
   resetKey: "*",
   step: 0.25,

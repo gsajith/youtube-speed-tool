@@ -45,8 +45,8 @@ after(async () => {
 });
 
 test("shortcuts, the control and Shift+scroll work in Firefox", { skip: !existsSync(firefoxPath) }, async () => {
-  await page.keyboard.press("+");
-  await page.keyboard.press("+");
+  await page.keyboard.press("=");
+  await page.keyboard.press("=");
   assert.equal(await playbackRate(), 1.5);
   await page.keyboard.press("*");
   assert.equal(await playbackRate(), 1);
