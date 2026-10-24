@@ -1,4 +1,5 @@
-"""Draws the extension icon at each size the manifest lists. Run: python3 scripts/make-icons.py"""
+"""Draws the extension icon at each size the manifest lists, plus the Chrome Web Store icon.
+Run: python3 scripts/make-icons.py"""
 
 from pathlib import Path
 
@@ -6,7 +7,9 @@ from PIL import Image, ImageDraw
 
 SIZES = [16, 32, 48, 128]
 SCALE = 8  # Draw large, then downsample for smooth edges.
-OUT = Path(__file__).resolve().parent.parent / "src" / "icons"
+ROOT = Path(__file__).resolve().parent.parent
+OUT = ROOT / "src" / "icons"
+STORE = ROOT / "store"
 TOP, BOTTOM = (242, 88, 64), (208, 48, 32)
 
 
@@ -40,3 +43,10 @@ if __name__ == "__main__":
     for size in SIZES:
         draw(size).save(OUT / f"icon-{size}.png")
         print(f"wrote icons/icon-{size}.png")
+
+    # The store wants 96x96 artwork centered in a transparent 128x128 square.
+    STORE.mkdir(exist_ok=True)
+    store_icon = Image.new("RGBA", (128, 128), (0, 0, 0, 0))
+    store_icon.paste(draw(96), (16, 16))
+    store_icon.save(STORE / "icon-128.png")
+    print("wrote store/icon-128.png")

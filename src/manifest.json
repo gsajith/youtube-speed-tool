@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Video Speed Tool",
-  "version": "0.1.0",
-  "description": "Change video playback speed with keyboard shortcuts or an on-video speed control. Works on YouTube and any HTML5 video.",
+  "version": "1.0.0",
+  "description": "Press = to speed up any video and - to slow it down. Works on YouTube and every other site, up to 16x.",
   "icons": {
     "16": "icons/icon-16.png",
     "32": "icons/icon-32.png",
