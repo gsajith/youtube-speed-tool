@@ -1,0 +1,16 @@
+{
+  "categories": {
+    "firefox": [
+      "photos-music-videos"
+    ]
+  },
+  "summary": {
+    "en-US": "Press = to speed up any video and - to slow it down. Works on YouTube and every other site, up to 16x."
+  },
+  "description": {
+    "en-US": "Press = to speed a video up and - to slow it down. That's the whole extension. It works on YouTube and on any other site that plays video, including players embedded in other pages.\n\nWHAT YOU GET\n• Speed changes in steps of 0.25x, one key press each. You can change the step.\n• Any speed up to 16x.\n• A small speed display on the video. Click it to jump back to 1x.\n• Show the control on hover, keep it on screen, or hide it. Put it in any corner, or the middle of the top or bottom edge.\n• A running total of the time you've saved by watching faster.\n\nHOW TO USE\n1. Reload any tab that already had a video open.\n2. Press = to go faster and - to go slower.\n3. Click the extension's toolbar icon to change the keys, the step or how the control looks.\n\nOn a page with an embedded player, click the player once so it gets your key presses. The keys do nothing while you're typing in a search box or comment field.\n\nPRIVACY\nVideo Speed Tool collects nothing about you or the pages you visit. It has no analytics, no account and no server. Your settings sync between your own browsers through your browser's sync, and the time-saved total stays on this device. Privacy policy: https://github.com/gsajith/youtube-speed-tool/blob/main/PRIVACY.md\n\nWHY IT ASKS FOR ACCESS TO ALL WEBSITES\nVideos can be on any site, so the extension runs on every page. On each one it finds the videos, changes their speed when you press a speed key, and draws the speed control over them. It checks each key press only to see if it's one of your two speed keys. It doesn't read page text, forms or your history.\n\nGOOD TO KNOW\nAudio may cut out above 4x. Browsers do that, not this extension.\n\nSUPPORT AND SOURCE CODE\nReport a bug or ask for a feature at https://github.com/gsajith/youtube-speed-tool/issues. The code is open source under the MIT license."
+  },
+  "version": {
+    "license": "MIT"
+  }
+}

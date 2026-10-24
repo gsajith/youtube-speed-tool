@@ -35,3 +35,13 @@ Chrome uses `background.service_worker`, and Firefox uses `background.scripts`. 
 about `service_worker` being ignored on Firefox is expected.
 
 The Firefox test looks for `/Applications/Firefox.app`. Set `FIREFOX_PATH` to point it elsewhere.
+
+## Publishing
+
+[`CHROMEWEBSTORE.md`](CHROMEWEBSTORE.md) has the listing copy, permission justifications and
+privacy answers for both stores. Store art lives in `store/`. Regenerate it with
+`npm run store-assets` and `npm run icons`. The privacy policy is [`PRIVACY.md`](PRIVACY.md).
+
+## License
+
+MIT
