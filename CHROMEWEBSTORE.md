@@ -8,9 +8,7 @@ This file holds everything the Chrome Web Store and Firefox Add-ons (AMO) dashbo
 
 **Name.** Video Speed Tool. It must match `name` in `src/manifest.json`.
 
-**Short description** (Chrome, 132 character limit) and **summary** (Firefox, 250 limit). This is also the manifest `description`:
-
-> Press = to speed up any video and - to slow it down. Works on YouTube and every other site, up to 16x.
+**Short description** (Chrome, 132 character limit) and **summary** (Firefox, 250 limit). Copy `description` from `src/manifest.json`, the single source for this line. `tests/store.test.mjs` enforces the limits.
 
 **Detailed description.** Paste [`store/description.txt`](store/description.txt) as is. Chrome strips markdown, so it's plain text with line breaks and `•` bullets.
 
@@ -80,7 +78,7 @@ Settings go through Chrome's own sync to the user's own account. The developer n
 
 ## Firefox Add-ons
 
-- **Summary, description and category.** In [`store/amo-metadata.json`](store/amo-metadata.json), which `web-ext sign` sends on the first listed submission. Its description is a copy of `store/description.txt`, so update both together.
+- **Summary, description and category.** Edit them under "Edit Product Page" in the Developer Hub, from the manifest `description` and `store/description.txt`. The first submission sent them from a metadata file. Later versions upload without one.
 - **License.** MIT, in `LICENSE`.
 - **Data collection.** None, declared in the manifest under `browser_specific_settings.gecko.data_collection_permissions`.
 - **Source code upload.** Not needed. The package is the source, with no minifying or bundling.

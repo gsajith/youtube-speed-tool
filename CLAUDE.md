@@ -1,3 +1,8 @@
+## Working here
+
+- Keep the main checkout on `main`: the user's Firefox add-on loads from its `src/`. Do all branch work in a worktree under `.claude/worktrees/`, and run `npm ci` there first.
+- Code review applies `CODING_STANDARDS.md`.
+
 ## Agent skills
 
 ### Issue tracker
