@@ -293,6 +293,10 @@ legend {
   opacity: 0.7;
 }
 
+.no-gear .pill .gear {
+  display: none;
+}
+
 .cursor {
   position: absolute;
   left: 52%;

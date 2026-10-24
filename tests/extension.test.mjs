@@ -130,6 +130,17 @@ test("time saved is recorded while watching faster", async () => {
   await options.close();
 });
 
+test("turning off the settings button removes it from the mode previews", async () => {
+  const options = await context.newPage();
+  await options.goto(`chrome-extension://${extensionId}/options.html`);
+  const gears = options.locator(".preview .gear");
+  await gears.first().waitFor({ state: "visible" });
+  await options.click('[data-setting="showSettingsButton"]');
+  assert.equal(await gears.evaluateAll((els) => els.filter((el) => el.checkVisibility()).length), 0);
+  await options.click('[data-setting="showSettingsButton"]');
+  await options.close();
+});
+
 test("changes on the options page apply to open videos", async () => {
   const options = await context.newPage();
   await options.goto(`chrome-extension://${extensionId}/options.html`);
