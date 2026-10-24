@@ -60,8 +60,6 @@ const OVERLAY_CSS = `
   const FLASH_MS = 300; // How long a hidden control shows after the speed changes.
   const MIN_VIDEO_WIDTH = 160; // Skip thumbnails and tiny previews.
   const MIN_VIDEO_HEIGHT = 90;
-  const WHEEL_THRESHOLD = 50; // Pixels of scroll per speed step, so trackpads don't race.
-  const WHEEL_IDLE_MS = 300; // A pause this long starts a new scroll gesture.
   const POLL_MS = 500; // Catches player moves that fire no event, like a banner pushing it down.
 
   const settings = await loadSettings();
@@ -69,8 +67,6 @@ const OVERLAY_CSS = `
   let hovering = false;
   let pointer = { x: -1, y: -1 }; // Last mouse position, to recompute hovering on a video switch.
   let flashUntil = 0;
-  let wheelDelta = 0;
-  let lastWheel = 0;
   let unsavedSeconds = 0;
   const lastTimes = new WeakMap(); // video -> currentTime at its previous timeupdate
 
@@ -139,11 +135,7 @@ const OVERLAY_CSS = `
     video = next;
     resizeObserver.observe(video);
     hovering = isPointerOver(video);
-    wheelDelta = 0;
     rate.textContent = formatRate(video.playbackRate);
-    // Only pages with a video pay for a non-passive wheel listener. Adding the same listener
-    // again is a no-op.
-    addEventListener("wheel", onWheel, { capture: true, passive: false });
     mount();
   }
 
@@ -163,14 +155,6 @@ const OVERLAY_CSS = `
     }
     if (best) setVideo(best);
     return best;
-  }
-
-  function videoAt(x, y) {
-    const found = [video, ...document.querySelectorAll("video")].find(
-      (v) => v?.isConnected && contains(v.getBoundingClientRect(), x, y),
-    );
-    if (found) setVideo(found);
-    return found;
   }
 
   function setRate(v, next) {
@@ -252,22 +236,6 @@ const OVERLAY_CSS = `
     } catch {
       // The extension was reloaded or removed, so this copy of the script can't report anymore.
     }
-  }
-
-  function onWheel(e) {
-    if (!settings.shiftScroll || !e.shiftKey || e.ctrlKey || e.metaKey) return;
-    const v = videoAt(e.clientX, e.clientY);
-    if (!v) return;
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    if (Date.now() - lastWheel > WHEEL_IDLE_MS) wheelDelta = 0;
-    lastWheel = Date.now();
-    // macOS turns Shift+vertical scroll into horizontal scroll, so read whichever axis moved.
-    // Firefox reports mouse wheels in lines (deltaMode 1) instead of pixels.
-    wheelDelta += (e.deltaY || e.deltaX) * (e.deltaMode === 1 ? 33 : 1);
-    if (Math.abs(wheelDelta) < WHEEL_THRESHOLD) return;
-    stepRate(v, wheelDelta < 0 ? 1 : -1);
-    wheelDelta = 0;
   }
 
   // Media events don't bubble, but they do pass through the capture phase on document.
