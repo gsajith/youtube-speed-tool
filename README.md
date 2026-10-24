@@ -3,7 +3,7 @@
 A Chrome and Firefox extension for changing playback speed on YouTube and any other HTML5 video.
 It's a clone of [Youtube Playback Speed Control](https://chromewebstore.google.com/detail/youtube-playback-speed-co/hdannnflhlmdablckfkjpleikpphncik).
 
-- `+` speeds up, `-` slows down, `*` resets to 1x. Each key can be rebound, and the step defaults to 0.25.
+- `=` speeds up, `-` slows down, `*` resets to 1x. No Shift needed for the first two. Each key can be rebound, and the step defaults to 0.25.
 - Shift + scroll over a video changes speed.
 - A small `« 1x » ⚙` control sits on the video. Click the speed to reset it.
 - The control can show on hover, always, as the speed only, or never. It has six positions and an optional fade.

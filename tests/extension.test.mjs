@@ -48,8 +48,8 @@ beforeEach(async () => {
 });
 
 test("keyboard shortcuts change and reset the speed", async () => {
-  await page.keyboard.press("+");
-  await page.keyboard.press("+");
+  await page.keyboard.press("=");
+  await page.keyboard.press("=");
   await expectRate(1.5);
   await page.keyboard.press("-");
   await expectRate(1.25);
@@ -59,9 +59,9 @@ test("keyboard shortcuts change and reset the speed", async () => {
 
 test("typing in a text field leaves the speed alone", async () => {
   await page.click("#text");
-  await page.keyboard.press("+");
+  await page.keyboard.press("=");
   await expectRate(1);
-  assert.equal(await page.inputValue("#text"), "+");
+  assert.equal(await page.inputValue("#text"), "=");
 });
 
 test("the control appears on hover and its buttons work", async () => {
@@ -87,7 +87,7 @@ test("shift+scroll over the video changes the speed", async () => {
 
 test("stepping from a rate the site set lands back on 1x plus whole steps", async () => {
   await page.$eval("video", (v) => (v.playbackRate = 1.4));
-  await page.keyboard.press("+");
+  await page.keyboard.press("=");
   await expectRate(1.5);
   await page.$eval("video", (v) => (v.playbackRate = 1.12));
   await page.keyboard.press("-");
@@ -101,7 +101,7 @@ test("a small video that starts playing doesn't take over the shortcuts", async 
     document.body.append(preview);
     await preview.play();
   });
-  await page.keyboard.press("+");
+  await page.keyboard.press("=");
   await expectRate(1.25);
 });
 
