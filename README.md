@@ -6,7 +6,7 @@ It's a clone of [Youtube Playback Speed Control](https://chromewebstore.google.c
 - `=` speeds up, `-` slows down, `*` resets to 1x. No Shift needed for the first two. Each key can be rebound, and the step defaults to 0.25.
 - Shift + scroll over a video changes speed.
 - A small `« 1x » ⚙` control sits on the video. Click the speed to reset it.
-- The control can show on hover, always, as the speed only, or never. It has six positions and an optional fade.
+- The control can show on hover, always, or never. The speed buttons and the gear can each be turned off, leaving just the speed. It has six positions and an optional fade.
 - The options page shows how much time watching faster has saved you.
 
 Shortcuts act on the video in the focused frame. For an embedded player, click it once first.

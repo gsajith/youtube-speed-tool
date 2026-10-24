@@ -5,12 +5,20 @@ globalThis.DEFAULT_SETTINGS = Object.freeze({
   decreaseKey: "-",
   resetKey: "*",
   step: 0.25,
-  display: "hover", // "always" | "hover" | "simple" | "never"
+  display: "hover", // "hover" | "always" | "never"
   position: "top-right", // "top" or "bottom", then "left", "middle" or "right"
+  showSpeedButtons: true, // The « and » buttons. With both buttons off, only the speed shows.
   showSettingsButton: true,
   fade: true,
   shiftScroll: true,
 });
 
 // Passing the defaults to get() fills in any key the user hasn't changed.
-globalThis.loadSettings = () => chrome.storage.sync.get(DEFAULT_SETTINGS);
+globalThis.loadSettings = async () => {
+  const settings = await chrome.storage.sync.get(DEFAULT_SETTINGS);
+  // Version 0.1.0 had a "simple" mode. It's now "always" with both buttons off.
+  if (settings.display === "simple") {
+    Object.assign(settings, { display: "always", showSpeedButtons: false, showSettingsButton: false });
+  }
+  return settings;
+};

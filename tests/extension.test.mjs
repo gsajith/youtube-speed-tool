@@ -130,15 +130,30 @@ test("time saved is recorded while watching faster", async () => {
   await options.close();
 });
 
-test("turning off the settings button removes it from the mode previews", async () => {
+test("turning off the buttons removes them from the mode previews", async () => {
   const options = await context.newPage();
   await options.goto(`chrome-extension://${extensionId}/options.html`);
-  const gears = options.locator(".preview .gear");
-  await gears.first().waitFor({ state: "visible" });
+  const visibleCount = (selector) =>
+    options.locator(selector).evaluateAll((els) => els.filter((el) => el.checkVisibility()).length);
+  await options.locator(".preview .gear").first().waitFor({ state: "visible" });
+  await options.click('[data-setting="showSpeedButtons"]');
   await options.click('[data-setting="showSettingsButton"]');
-  assert.equal(await gears.evaluateAll((els) => els.filter((el) => el.checkVisibility()).length), 0);
-  await options.click('[data-setting="showSettingsButton"]');
+  assert.equal(await visibleCount(".preview .step"), 0);
+  assert.equal(await visibleCount(".preview .gear"), 0);
+  assert.equal(await visibleCount(".preview b"), 2); // The speed itself stays.
   await options.close();
+  await context.serviceWorkers()[0].evaluate(() => chrome.storage.sync.clear());
+});
+
+test("speed only on hover: the buttons hide but the speed still shows", async () => {
+  await context.serviceWorkers()[0].evaluate(() =>
+    chrome.storage.sync.set({ showSpeedButtons: false, showSettingsButton: false }),
+  );
+  await page.hover("video");
+  await page.locator(".rate").waitFor({ state: "visible" });
+  assert.equal(await page.locator(".inc").isVisible(), false);
+  assert.equal(await page.locator(".gear").isVisible(), false);
+  await context.serviceWorkers()[0].evaluate(() => chrome.storage.sync.clear());
 });
 
 test("changes on the options page apply to open videos", async () => {
