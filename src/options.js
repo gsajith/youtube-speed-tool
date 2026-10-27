@@ -1,5 +1,6 @@
 const KEY_SETTINGS = ["increaseKey", "decreaseKey"];
-const KEY_LABELS = { " ": "Space", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: "←", ArrowRight: "→" };
+// The = key shows as +, its key cap. Shift is optional (see unshiftedKey in settings.js).
+const KEY_LABELS = { "=": "+", " ": "Space", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: "←", ArrowRight: "→" };
 const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta", "CapsLock", "Fn", "OS", "Dead"]);
 
 const stepInput = document.getElementById("step");

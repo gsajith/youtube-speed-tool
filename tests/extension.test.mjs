@@ -67,6 +67,14 @@ test("keyboard shortcuts change the speed", async () => {
   await expectRate(1.25);
 });
 
+test("the speed keys still work with Shift held", async () => {
+  // Shift turns = into + and - into _. The store copy says "press +", so people will hold it.
+  await page.keyboard.press("Shift+Equal");
+  await expectRate(1.25);
+  await page.keyboard.press("Shift+Minus");
+  await expectRate(1);
+});
+
 test("typing in a text field leaves the speed alone", async () => {
   await page.click("#text");
   await page.keyboard.press("=");

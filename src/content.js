@@ -317,7 +317,10 @@ const OVERLAY_CSS = `
     "keydown",
     (e) => {
       if (e.ctrlKey || e.metaKey || e.altKey || isTyping(e)) return;
-      const direction = { [settings.increaseKey]: 1, [settings.decreaseKey]: -1 }[e.key];
+      const direction = {
+        [unshiftedKey(settings.increaseKey)]: 1,
+        [unshiftedKey(settings.decreaseKey)]: -1,
+      }[unshiftedKey(e.key)];
       if (!direction) return;
       const v = activeVideo();
       if (!v) return;
