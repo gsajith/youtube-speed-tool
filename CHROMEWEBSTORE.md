@@ -1,6 +1,6 @@
 # Store listings: Video Speed Tool
 
-Last updated: 2026-10-24
+Last updated: 2026-10-27
 
 This file holds everything the Chrome Web Store and Firefox Add-ons (AMO) dashboards ask for. Both stores take the same package from `npm run build`.
 
@@ -18,17 +18,20 @@ This file holds everything the Chrome Web Store and Firefox Add-ons (AMO) dashbo
 
 ### Why this copy
 
-- The short description gives the two keys before anything else. Someone scanning search results learns how to use it before they install, so trying it takes no effort.
-- "Works on YouTube and every other site" answers the first question a YouTube user has, and widens the audience past YouTube in the same line.
-- "Up to 16x" is a number someone can check, instead of "fast" or "powerful".
-- The description explains the "all websites" permission before Chrome's install warning does. An unexplained broad permission is the most likely reason someone backs out of the install.
+- Lead with the outcome, not the key. People install this to get through a video faster, so "half the time" comes first and "one key" explains how. The key itself appears in the screenshots, where it reads as proof of how little effort it takes.
+- "A 40-minute lecture in 20" is a picture someone can check against their own watch list. It does more than "save time".
+- Name the key as +, the label on the key cap. Calling it = reads as a typo. The extension accepts it with or without Shift, so the copy never needs to explain Shift beyond one line.
+- The time-saved total is the strongest proof the product offers, and it's a number the reader will watch grow. Screenshot 2 leads with it instead of with the settings.
+- "Even on sites with no speed menu" names the gap the browser leaves. On YouTube, people already have a slower way, the menu. Elsewhere they often have none.
+- "Free, no tracking" sits in the short description because a broad-permission extension has to earn trust before Chrome's install warning appears. The description repeats it, then explains the "all websites" permission in plain words.
 - "Audio may cut out above 4x" admits a limit up front. Saying it first beats a one-star review that says it later.
-- "YouTube" appears only as the place where it works. It's never in the name or the icon, and the screenshots use made-up players. Store policy flags names and art that suggest a partnership with another brand.
+- "YouTube" appears only as a place where it works. It's never in the name or the icon, and the screenshots use made-up players. Store policy flags names and art that suggest a partnership with another brand.
+- No ratings, user counts or testimonials yet. Add real ones once the listings have them. Don't invent them.
 
 Alternatives for the short description, if the first one tests poorly:
 
-- "Speed up any video with one key: = goes faster, - goes slower. Up to 16x, on YouTube and every other site." Leads with the outcome instead of the action.
-- "Watch videos faster with one key. Press = to speed up and - to slow down, on YouTube and every site with video." Softer, with no number.
+- "Finish a 40-minute lecture in 20. One key speeds up any video, on YouTube and every other site. Free, no tracking." More concrete, aimed at students.
+- "Get through long videos faster. Press + to speed up any video on YouTube or any other site, up to 16x. Free, no tracking." Names the key for people who search by how it works.
 
 ## Graphics
 
@@ -37,9 +40,9 @@ All files are in `store/`. Regenerate them with `npm run store-assets` (screensh
 | Asset | Size | File | Store |
 |---|---|---|---|
 | Store icon | 128x128, 96x96 artwork with transparent padding | `store/icon-128.png` | Chrome |
-| Screenshot 1: the keys and the control | 1280x800 | `store/screenshot-1.png` | Both |
-| Screenshot 2: the settings page | 1280x800 | `store/screenshot-2.png` | Both |
-| Screenshot 3: a course site, speed-only control at the bottom left | 1280x800 | `store/screenshot-3.png` | Both |
+| Screenshot 1: "Watch a 40-minute video in 20", the keys and the control at 2x | 1280x800 | `store/screenshot-1.png` | Both |
+| Screenshot 2: "See the hours you've saved", the settings page | 1280x800 | `store/screenshot-2.png` | Both |
+| Screenshot 3: "Even on sites with no speed menu", a course site with a speed-only control | 1280x800 | `store/screenshot-3.png` | Both |
 | Small promo tile | 440x280 | `store/promo-440x280.png` | Chrome |
 
 Firefox takes its icon from the package, so it needs no separate upload.
@@ -90,7 +93,7 @@ Settings go through Chrome's own sync to the user's own account. The developer n
 
 Both stores have a field for this. Paste:
 
-> No build step: the uploaded files are the source. To test, open any page with a video, for example a YouTube video, and press = and - to change the speed. Hover over the video to see the speed control. Click the toolbar icon to open the settings.
+> No build step: the uploaded files are the source. To test, open any page with a video, for example a YouTube video, and press + and - to change the speed. Hover over the video to see the speed control. Click the toolbar icon to open the settings.
 
 ## Known issues and review risks
 

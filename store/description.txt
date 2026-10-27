@@ -1,21 +1,25 @@
-Press = to speed a video up and - to slow it down. That's the whole extension. It works on YouTube and on any other site that plays video, including players embedded in other pages.
+Watch a 40-minute lecture in 20 minutes. Press + to speed up any video and - to slow it down. No digging through menus, and it works on sites that have no speed control at all.
 
-WHAT YOU GET
-• Speed changes in steps of 0.25x, one key press each. You can change the step.
-• Any speed up to 16x.
-• A small speed display on the video. Click it to jump back to 1x.
-• Show the control on hover, keep it on screen, or hide it. Put it in any corner, or the middle of the top or bottom edge.
-• A running total of the time you've saved by watching faster.
+WHAT IT'S GOOD FOR
+• Lectures and courses. Move through the easy parts at 2x, then drop back for the hard ones.
+• Tutorials and talks. Skim ahead, slow down when it gets to the part you came for.
+• Any site with a video. YouTube, course platforms, news sites, and players embedded in blogs.
 
-HOW TO USE
+HOW IT WORKS
+• Each press of + or - changes the speed by 0.25x by default. You don't need to hold Shift.
+• The speed shows on the video, up to 16x. Click it to jump back to 1x.
+• The settings page keeps a running total of the time you've saved.
+• Pick your own keys and step. Show the control on hover, keep it on screen, or hide it, in any of six spots.
+
+GET STARTED
 1. Reload any tab that already had a video open.
-2. Press = to go faster and - to go slower.
-3. Click the extension's toolbar icon to change the keys, the step or how the control looks.
+2. Press + while a video plays.
+That's all the setup there is.
 
-On a page with an embedded player, click the player once so it gets your key presses. The keys do nothing while you're typing in a search box or comment field.
+On a page with an embedded player, click the player once so it gets your key presses. The keys do nothing while you type in a search box or comment field.
 
-PRIVACY
-Video Speed Tool collects nothing about you or the pages you visit. It has no analytics, no account and no server. Your settings sync between your own browsers through your browser's sync, and the time-saved total stays on this device. Privacy policy: https://github.com/gsajith/youtube-speed-tool/blob/main/PRIVACY.md
+FREE AND PRIVATE
+No account, no ads, no analytics, no server. Video Speed Tool collects nothing about you or the pages you visit. Your settings sync between your own browsers through your browser's sync, and the time-saved total stays on this device. The code is open source under the MIT license. Privacy policy: https://github.com/gsajith/youtube-speed-tool/blob/main/PRIVACY.md
 
 WHY IT ASKS FOR ACCESS TO ALL WEBSITES
 Videos can be on any site, so the extension runs on every page. On each one it finds the videos, changes their speed when you press a speed key, and draws the speed control over them. It checks each key press only to see if it's one of your two speed keys. It doesn't read page text, forms or your history.
@@ -23,5 +27,5 @@ Videos can be on any site, so the extension runs on every page. On each one it f
 GOOD TO KNOW
 Audio may cut out above 4x. Browsers do that, not this extension.
 
-SUPPORT AND SOURCE CODE
-Report a bug or ask for a feature at https://github.com/gsajith/youtube-speed-tool/issues. The code is open source under the MIT license.
+SUPPORT
+Report a bug or ask for a feature at https://github.com/gsajith/youtube-speed-tool/issues.

@@ -54,14 +54,14 @@ const SCENES = {
       border-radius: 14px; background: #24221f; color: #fff; font: 600 34px ui-monospace, Menlo, monospace; }
   </style>
   <div class="copy">
-    <h1>Press = to watch faster.</h1>
-    <p class="sub">Press - to slow down. The speed shows on the video, and goes up to 16x.</p>
+    <h1>Watch a <span style="white-space: nowrap">40-minute</span> video in 20.</h1>
+    <p class="sub">Press + to speed up and - to slow down. The speed shows right on the video.</p>
     <div class="keys">
-      <div class="key"><kbd>-</kbd>slower</div>
-      <div class="key"><kbd>=</kbd>faster</div>
+      <div class="key"><kbd>−</kbd>slower</div>
+      <div class="key"><kbd>+</kbd>faster</div>
     </div>
   </div>
-  ${player(704, 396, "12:48 / 34:10")}`,
+  ${player(704, 396, "14:20 / 40:00")}`,
 
   // 2: the settings page, captured separately and dropped in.
   settings: (image) => `<style>${BASE_CSS}
@@ -73,8 +73,8 @@ const SCENES = {
     .shot img { display: block; width: 100%; }
   </style>
   <div class="copy">
-    <h1>Make it yours.</h1>
-    <p class="sub">Pick your keys and the step size. Show the control on hover, always or never, in any of six spots.</p>
+    <h1>See the hours you've saved.</h1>
+    <p class="sub">The settings page keeps a running total. It's also where you pick your keys, the step and the control's spot.</p>
   </div>
   <div class="shot"><img src="${image}" alt="" /></div>`,
 
@@ -100,8 +100,8 @@ const SCENES = {
       ${player(760, 428, "8:02 / 41:55")}
     </div>
     <div class="side">
-      <h1>Any site with a video.</h1>
-      <p class="sub">YouTube, course sites, news clips, players embedded in blogs. The same two keys work on all of them.</p>
+      <h1>Even on sites with no speed menu.</h1>
+      <p class="sub">Course sites, news clips, players embedded in blogs, and YouTube. The same two keys work on all of them.</p>
     </div>
   </main>`,
 
@@ -111,12 +111,14 @@ const SCENES = {
     .row { display: flex; align-items: center; gap: 14px; }
     .row img { width: 56px; height: 56px; border-radius: 12px; box-shadow: 0 6px 16px rgb(0 0 0 / 0.25); }
     .row b { font-size: 30px; letter-spacing: -0.01em; }
-    p { margin: 0; font-size: 20px; line-height: 1.35; }
+    p { margin: 0; font-size: 18px; line-height: 1.35; }
+    p.pitch { font-size: 28px; font-weight: 700; line-height: 1.15; letter-spacing: -0.01em; }
     kbd { display: inline-grid; place-items: center; min-width: 30px; height: 30px; padding: 0 6px; border-radius: 7px;
       background: rgb(255 255 255 / 0.2); font: 600 18px ui-monospace, Menlo, monospace; }
   </style>
   <div class="row"><img src="/icon.png" alt="" /><b>Video Speed Tool</b></div>
-  <p>Press <kbd>=</kbd> to speed up any video and <kbd>-</kbd> to slow it down.</p>`,
+  <p class="pitch">Watch videos in<br />half the time.</p>
+  <p><kbd>+</kbd> faster &nbsp; <kbd>−</kbd> slower</p>`,
 };
 
 const context = await chromium.launchPersistentContext("", {
@@ -169,7 +171,7 @@ await options.waitForTimeout(300);
 settingsImage = `data:image/png;base64,${(await options.screenshot({ clip: { x: 40, y: 0, width: 680, height: 1100 } })).toString("base64")}`;
 await options.close();
 
-await shoot("keys", "screenshot-1.png", { rate: 1.75 });
+await shoot("keys", "screenshot-1.png", { rate: 2 });
 await shoot("settings", "screenshot-2.png");
 await shoot("anywhere", "screenshot-3.png", {
   rate: 2,

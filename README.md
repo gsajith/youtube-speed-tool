@@ -1,9 +1,10 @@
 # Video Speed Tool
 
-A Chrome and Firefox extension for changing playback speed on YouTube and any other HTML5 video.
+Watch videos in half the time. A Chrome and Firefox extension that puts playback speed on two
+keys, + and -, on YouTube and every other site with an HTML5 video, including ones with no speed menu.
 It's a clone of [Youtube Playback Speed Control](https://chromewebstore.google.com/detail/youtube-playback-speed-co/hdannnflhlmdablckfkjpleikpphncik).
 
-- `=` speeds up and `-` slows down, no Shift needed. Both keys can be rebound, and the step defaults to 0.25.
+- `+` speeds up and `-` slows down, with or without Shift. Both keys can be rebound, and the step defaults to 0.25.
 - A small `« 1x » ⚙` control sits on the video. Click the speed to reset it.
 - The control can show on hover, always, or never. The speed buttons and the gear can each be turned off, leaving just the speed. It has six positions and an optional fade.
 - The options page shows how much time watching faster has saved you.
