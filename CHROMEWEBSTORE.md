@@ -71,6 +71,7 @@ Settings go through Chrome's own sync to the user's own account. The developer n
 
 ## Chrome: other fields
 
+- **Listing.** https://chromewebstore.google.com/detail/video-speed-tool/gfifblkggbfdfmcihcidddilgbgbaodg
 - **Homepage URL.** https://github.com/gsajith/youtube-speed-tool
 - **Support URL.** https://github.com/gsajith/youtube-speed-tool/issues
 - **Visibility.** Public. **Regions.** All. **Price.** Free.
@@ -101,7 +102,7 @@ Both stores have a field for this. Paste:
 
 | Version | Date | Changes | Chrome | Firefox |
 |---|---|---|---|---|
-| 1.0.0 | 2026-10-24 | First public release | Draft | Live 2026-10-27 |
+| 1.0.0 | 2026-10-24 | First public release | Live 2026-10-27 | Live 2026-10-27 |
 
 ## Rejection history
 
