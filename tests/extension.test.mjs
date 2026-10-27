@@ -204,3 +204,19 @@ test("changes on the options page apply to open videos", async () => {
 
   await context.serviceWorkers()[0].evaluate(() => chrome.storage.sync.clear());
 });
+
+test("binding Shift+= swaps with the = key instead of sharing it", async () => {
+  const options = await context.newPage();
+  await options.goto(`chrome-extension://${extensionId}/options.html`);
+  await options.click('[data-setting="decreaseKey"]');
+  await options.keyboard.press("Shift+Equal");
+  assert.equal(await options.textContent('[data-setting="decreaseKey"]'), "+");
+  assert.equal(await options.textContent('[data-setting="increaseKey"]'), "-");
+  await options.close();
+
+  await page.bringToFront();
+  await page.keyboard.press("Minus");
+  await expectRate(1.25);
+
+  await context.serviceWorkers()[0].evaluate(() => chrome.storage.sync.clear());
+});
