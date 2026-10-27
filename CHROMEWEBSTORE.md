@@ -89,6 +89,14 @@ Settings go through Chrome's own sync to the user's own account. The developer n
 - **Source code upload.** Not needed. The package is the source, with no minifying or bundling.
 - **Screenshots, homepage and support URL.** Set by hand under "Edit Product Page". Signing doesn't send them.
 
+## Releasing an update
+
+1. Bump `version` in `src/manifest.json`, add a row to the version history below, and merge.
+2. On `main`, run `npm ci && npm test && npm run build`. Upload `dist/video_speed_tool-<version>.zip` to both stores.
+3. Chrome: in the developer dashboard, open the item. Under Package, click "Upload new package". Under Store listing, paste the description and replace the screenshots and promo tile if they changed. Save the draft, then click "Submit for review". The short description comes from the package, so it only changes with a new upload.
+4. Firefox: in the Developer Hub, open the add-on and click "Upload New Version". Answer "No" to the source code question, and paste the release notes and the reviewer notes below. The summary, description and screenshots don't come from the package. Change them under "Edit Product Page", where edits apply right away.
+5. Update the Chrome and Firefox columns in the version history as each store goes live.
+
 ## Notes for reviewers
 
 Both stores have a field for this. Paste:
@@ -106,6 +114,7 @@ Both stores have a field for this. Paste:
 | Version | Date | Changes | Chrome | Firefox |
 |---|---|---|---|---|
 | 1.0.0 | 2026-10-24 | First public release | Live 2026-10-27 | Live 2026-10-27 |
+| 1.0.1 | 2026-10-27 | + and - work with Shift held. New short description, copy and art | Not submitted | Not submitted |
 
 ## Rejection history
 

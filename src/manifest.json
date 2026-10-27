@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Video Speed Tool",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Watch videos in half the time. One key speeds up any video, on YouTube and every other site, up to 16x. Free, no tracking.",
   "icons": {
     "16": "icons/icon-16.png",
