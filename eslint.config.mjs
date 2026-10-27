@@ -18,7 +18,7 @@ export default [
   {
     // settings.js publishes these through globalThis, for itself and the scripts loaded after it.
     files: ["src/settings.js", "src/content.js", "src/options.js"],
-    languageOptions: { globals: { DEFAULT_SETTINGS: "readonly", loadSettings: "readonly" } },
+    languageOptions: { globals: { DEFAULT_SETTINGS: "readonly", loadSettings: "readonly", unshiftedKey: "readonly" } },
   },
   {
     // Node scripts whose evaluate() callbacks run in the browser.

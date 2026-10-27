@@ -1,5 +1,6 @@
 const KEY_SETTINGS = ["increaseKey", "decreaseKey"];
-const KEY_LABELS = { " ": "Space", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: "←", ArrowRight: "→" };
+// The = key shows as +, its key cap. Shift is optional (see unshiftedKey in settings.js).
+const KEY_LABELS = { "=": "+", " ": "Space", ArrowUp: "↑", ArrowDown: "↓", ArrowLeft: "←", ArrowRight: "→" };
 const MODIFIER_KEYS = new Set(["Shift", "Control", "Alt", "Meta", "CapsLock", "Fn", "OS", "Dead"]);
 
 const stepInput = document.getElementById("step");
@@ -74,9 +75,11 @@ document.addEventListener("keydown", (e) => {
   button.blur();
   if (e.key === "Escape") return;
   const setting = button.dataset.setting;
-  const patch = { [setting]: e.key };
+  // Save Shift+= as =, so it clashes with = below instead of quietly sharing its key.
+  const key = unshiftedKey(e.key);
+  const patch = { [setting]: key };
   // Swap rather than leave two actions on one key.
-  const clash = KEY_SETTINGS.find((k) => k !== setting && settings[k] === e.key);
+  const clash = KEY_SETTINGS.find((k) => k !== setting && unshiftedKey(settings[k]) === key);
   if (clash) patch[clash] = settings[setting];
   save(patch);
 });
