@@ -11,7 +11,11 @@ It's a clone of [Youtube Playback Speed Control](https://chromewebstore.google.c
 Shortcuts act on the video in the focused frame. For an embedded player, click it once first.
 Shortcuts are ignored while you type in a text field.
 
-## Try it
+## Install
+
+Firefox: [get it from Firefox Add-ons](https://addons.mozilla.org/firefox/addon/video-speed-tool/).
+
+## Try it from source
 
 Chrome: open `chrome://extensions`, turn on Developer mode, click "Load unpacked" and pick `src/`.
 
