@@ -67,7 +67,7 @@ Firefox takes its icon from the package, so it needs no separate upload.
 
 Settings go through Chrome's own sync to the user's own account. The developer never receives them, so they don't count as collected data. [`PRIVACY.md`](PRIVACY.md) says the same.
 
-**Privacy policy URL.** https://github.com/gsajith/youtube-speed-tool/blob/main/PRIVACY.md. It only works once this branch is merged to `main`.
+**Privacy policy URL.** https://github.com/gsajith/youtube-speed-tool/blob/main/PRIVACY.md.
 
 ## Chrome: other fields
 
@@ -78,11 +78,12 @@ Settings go through Chrome's own sync to the user's own account. The developer n
 
 ## Firefox Add-ons
 
+- **Listing.** https://addons.mozilla.org/firefox/addon/video-speed-tool/
 - **Summary, description and category.** Edit them under "Edit Product Page" in the Developer Hub, from the manifest `description` and `store/description.txt`. The first submission sent them from a metadata file. Later versions upload without one.
 - **License.** MIT, in `LICENSE`.
 - **Data collection.** None, declared in the manifest under `browser_specific_settings.gecko.data_collection_permissions`.
 - **Source code upload.** Not needed. The package is the source, with no minifying or bundling.
-- **After the add-on exists:** add the three screenshots, the homepage URL and the support URL under "Edit Product Page". Signing doesn't send those.
+- **Screenshots, homepage and support URL.** Set by hand under "Edit Product Page". Signing doesn't send them.
 
 ## Notes for reviewers
 
@@ -100,7 +101,7 @@ Both stores have a field for this. Paste:
 
 | Version | Date | Changes | Chrome | Firefox |
 |---|---|---|---|---|
-| 1.0.0 | 2026-10-24 | First public release | Draft | Draft |
+| 1.0.0 | 2026-10-24 | First public release | Draft | Live 2026-10-27 |
 
 ## Rejection history
 
