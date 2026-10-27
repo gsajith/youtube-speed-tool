@@ -13,7 +13,8 @@ Shortcuts are ignored while you type in a text field.
 
 ## Install
 
-Firefox: [get it from Firefox Add-ons](https://addons.mozilla.org/firefox/addon/video-speed-tool/).
+- Chrome: [get it from the Chrome Web Store](https://chromewebstore.google.com/detail/video-speed-tool/gfifblkggbfdfmcihcidddilgbgbaodg).
+- Firefox: [get it from Firefox Add-ons](https://addons.mozilla.org/firefox/addon/video-speed-tool/).
 
 ## Try it from source
 
