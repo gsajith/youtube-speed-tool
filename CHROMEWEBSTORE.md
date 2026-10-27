@@ -21,7 +21,7 @@ This file holds everything the Chrome Web Store and Firefox Add-ons (AMO) dashbo
 - Lead with the outcome, not the key. People install this to get through a video faster, so "half the time" comes first and "one key" explains how. The key itself appears in the screenshots, where it reads as proof of how little effort it takes.
 - "A 40-minute lecture in 20" is a picture someone can check against their own watch list. It does more than "save time".
 - Name the key as +, the label on the key cap. Calling it = reads as a typo. The extension accepts it with or without Shift, so the copy never needs to explain Shift beyond one line.
-- The time-saved total is the strongest proof the product offers, and it's the reader's own number. Screenshot 2 leads with it instead of with the settings.
+- The time-saved total is the strongest proof the product offers, and it's a number the reader will watch grow. Screenshot 2 leads with it instead of with the settings.
 - "Even on sites with no speed menu" names the gap the browser leaves. On YouTube, people already have a slower way, the menu. Elsewhere they often have none.
 - "Free, no tracking" sits in the short description because a broad-permission extension has to earn trust before Chrome's install warning appears. The description repeats it, then explains the "all websites" permission in plain words.
 - "Audio may cut out above 4x" admits a limit up front. Saying it first beats a one-star review that says it later.

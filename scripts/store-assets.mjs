@@ -74,7 +74,7 @@ const SCENES = {
   </style>
   <div class="copy">
     <h1>See the hours you've saved.</h1>
-    <p class="sub">The settings page keeps a running total. It's also where you pick your keys, the step and where the control sits.</p>
+    <p class="sub">The settings page keeps a running total. It's also where you pick your keys, the step and the control's spot.</p>
   </div>
   <div class="shot"><img src="${image}" alt="" /></div>`,
 

@@ -1,15 +1,14 @@
 Watch a 40-minute lecture in 20 minutes. Press + to speed up any video and - to slow it down. No digging through menus, and it works on sites that have no speed control at all.
 
-WHAT PEOPLE USE IT FOR
+WHAT IT'S GOOD FOR
 • Lectures and courses. Move through the easy parts at 2x, then drop back for the hard ones.
 • Tutorials and talks. Skim ahead, slow down when it gets to the part you came for.
 • Any site with a video. YouTube, course platforms, news sites, and players embedded in blogs.
-• Seeing the payoff. The settings page keeps a running total of the time you've saved.
 
 HOW IT WORKS
-• Each press of + or - changes the speed by 0.25x. You don't need to hold Shift.
-• The speed shows on the video. Click it to jump back to 1x.
-• Go up to 16x.
+• Each press of + or - changes the speed by 0.25x by default. You don't need to hold Shift.
+• The speed shows on the video, up to 16x. Click it to jump back to 1x.
+• The settings page keeps a running total of the time you've saved.
 • Pick your own keys and step. Show the control on hover, keep it on screen, or hide it, in any of six spots.
 
 GET STARTED
