@@ -114,7 +114,7 @@ Both stores have a field for this. Paste:
 | Version | Date | Changes | Chrome | Firefox |
 |---|---|---|---|---|
 | 1.0.0 | 2026-10-24 | First public release | Live 2026-10-27 | Live 2026-10-27 |
-| 1.0.1 | 2026-10-27 | + and - work with Shift held. New short description, copy and art | Not submitted | Not submitted |
+| 1.0.1 | 2026-10-27 | + and - work with Shift held. New short description, copy and art | In review since 2026-10-27 | Live 2026-10-27 |
 
 ## Rejection history
 
